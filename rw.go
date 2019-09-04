@@ -2,7 +2,6 @@ package secio
 
 import (
 	"crypto/cipher"
-	"crypto/hmac"
 	"encoding/binary"
 	"errors"
 	"fmt"
