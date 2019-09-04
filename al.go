@@ -77,7 +77,11 @@ func newMac(hashType string, key []byte) (HMAC, error) {
 	case "SHA512":
 		return HMAC{hmac.New(sha512.New, key), sha512.Size}, nil
 	case "SHA256":
-		return HMAC{hmac.New(sha256.New, key), sha256.Size}, nil
+		server := sha256.NewAvx512Server()
+		h512 := func() hash.Hash {
+			return sha256.NewAvx512(server)
+		}
+		return HMAC{hmac.New(h512, key), sha256.Size}, nil
 	default:
 		return HMAC{}, fmt.Errorf("Unrecognized hash type: %s", hashType)
 	}
