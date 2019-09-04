@@ -366,8 +366,8 @@ func (s *secureSession) runHandshakeSync() error {
 	// step 3. Finish -- send expected message to verify encryption works (send local nonce)
 
 	// setup ETM ReadWriter
-	w := NewETMWriter(s.insecure, s.local.cipher, s.local.mac)
-	r := NewETMReader(s.insecure, s.remote.cipher, s.remote.mac)
+	w := msgio.NewWriter(s.insecure)
+	r := msgio.NewReader(s.insecure)
 	s.ReadWriteCloser = msgio.Combine(w, r).(msgio.ReadWriteCloser)
 
 	// log.Debug("3.0 finish. sending: %v", proposeIn.GetRand())
