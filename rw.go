@@ -215,22 +215,22 @@ func (r *etmReader) macCheckThenDecrypt(m []byte) (int, error) {
 	}
 
 	mark := l - r.mac.size
-	data := m[:mark]
-	macd := m[mark:]
+	// data := m[:mark]
+	// macd := m[mark:]
 
-	r.mac.Write(data)
-	r.macBuf = r.mac.Sum(r.macBuf[:0])
-	r.mac.Reset()
+	// r.mac.Write(data)
+	// r.macBuf = r.mac.Sum(r.macBuf[:0])
+	// r.mac.Reset()
 
-	// check mac. if failed, return error.
-	if !hmac.Equal(macd, r.macBuf) {
-		log.Debug("MAC Invalid:", r.macBuf, "!=", macd)
-		return 0, ErrMACInvalid
-	}
+	// // check mac. if failed, return error.
+	// if !hmac.Equal(macd, r.macBuf) {
+	// 	log.Debug("MAC Invalid:", r.macBuf, "!=", macd)
+	// 	return 0, ErrMACInvalid
+	// }
 
 	// ok seems good. decrypt. (can decrypt in place, yay!)
 	// log.Debugf("DEC ciphertext (%d): %s %v", len(data), data, data)
-	r.str.XORKeyStream(data, data)
+	// r.str.XORKeyStream(data, data)
 	// log.Debugf("DEC plaintext (%d): %s %v", len(data), data, data)
 
 	return mark, nil
